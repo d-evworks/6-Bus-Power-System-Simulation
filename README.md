@@ -10,7 +10,7 @@
 
 This project models a **6-bus AC power distribution network** using [Pandapower](https://www.pandapower.org/), an open-source Python library for power system analysis. A **solar PV generator** is integrated at Bus 2 to study the behaviour of renewable generation in a meshed grid.
 
-The simulation performs **Newton-Raphson load flow analysis** under a baseline operating condition and three stress-test scenarios to evaluate how changes in load demand, network impedance, and renewable generation affect **bus voltages**, **line loading**, and overall **grid stability**.
+The simulation performs **Newton-Raphson load flow analysis**. Power flow calculations are performed using the Newton-Raphson method, an iterative numerical technique widely used for solving nonlinear power system equations under a baseline operating condition and three stress-test scenarios to evaluate how changes in load demand, network impedance, and renewable generation affect **bus voltages**, **line loading**, and overall **grid stability**.
 
 ---
 
