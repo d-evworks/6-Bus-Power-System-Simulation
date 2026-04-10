@@ -1,0 +1,4 @@
+pandapower>=2.13.0
+pandas>=1.5.0
+matplotlib>=3.6.0
+numpy>=1.23.0
