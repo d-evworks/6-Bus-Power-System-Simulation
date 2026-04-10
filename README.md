@@ -146,5 +146,5 @@ Results are saved automatically to `results/` and `diagrams/`.
 ## Contact
 
 **Dev Kanwar**  
-M.Sc. Power Engineering — Brandenburg University of Technology Cottbus  
-devkanwar0515@gmail.com · [LinkedIn](https://linkedin.com/in/dev-kanwar-b8729124b)
+M.Sc. Power Engineering — Brandenburgische Technische Universität Cottbus-Senftenberg  
+kanwar.dev0506@gmail.com · [LinkedIn](https://linkedin.com/in/dev-kanwar-b8729124b)
