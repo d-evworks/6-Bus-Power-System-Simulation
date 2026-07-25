@@ -1,0 +1,4 @@
+pandapower>=3.0
+pandas
+numpy
+anthropic
