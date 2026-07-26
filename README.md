@@ -148,3 +148,9 @@ Results are saved automatically to `results/` and `diagrams/`.
 **Dev Kanwar**  
 M.Sc. Power Engineering — Brandenburgische Technische Universität Cottbus-Senftenberg  
 kanwar.dev0506@gmail.com · [LinkedIn](https://linkedin.com/in/dev-kanwar-b8729124b)
+## Extension: AI-Agent-Assisted Analysis
+
+See [`6 bus ai agent/`](./6%20bus%20ai%20agent) for an extension of this
+project that compares a traditional manual workflow against an AI-agent-assisted
+workflow for interpreting N-1 contingency results — built to demonstrate the
+"AI-enhanced simulation workflow" methodology relevant to SIMULIA-style roles.
