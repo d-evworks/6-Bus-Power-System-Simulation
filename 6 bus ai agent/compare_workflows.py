@@ -1,14 +1,8 @@
 """
-Main entry point: runs the 6-bus network + 4 N-1 contingency scenarios, then
+Main entry point: runs the 6-bus network + 4 stress scenarios, then
 generates BOTH the traditional (raw numeric) report and the AI-agent-assisted
 report from the SAME underlying simulation results, times each, and writes
 both to results/ for side-by-side comparison.
-
-This directly mirrors the responsibility described in the Dassault Systemes
-SIMULIA "Working Student - AI-Powered Research on Electromagnetic Simulation"
-posting: "test the AI agent's performance ... by comparing traditional
-simulation workflows with AI-enhanced processes, measuring improvements in
-efficiency, accuracy, and user satisfaction."
 """
 import os
 from contingency import run_all_scenarios
@@ -20,7 +14,7 @@ RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results"
 def main():
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-    print("Running Newton-Raphson load flow: baseline + 4 N-1 contingency scenarios...")
+    print("Running Newton-Raphson load flow: baseline + 4 stress scenarios...")
     results = run_all_scenarios()
 
     trad_text, trad_time = timed(traditional_report, results)

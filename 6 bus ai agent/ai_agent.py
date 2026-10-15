@@ -9,10 +9,8 @@ Two report-generation "workflows" over the same simulation results:
    otherwise falls back to a rule-based agent so the demo always runs
    standalone with no API key required.
 
-This mirrors the comparison described in the Dassault Systemes SIMULIA
-"Working Student - AI-Powered Research on Electromagnetic Simulation" role:
-testing an AI agent's performance against a traditional workflow by measuring
-efficiency, accuracy, and how much manual interpretation it saves the engineer.
+The idea: check how much manual interpretation an AI layer can save an
+engineer, and whether it still gets the engineering conclusions right.
 """
 import os
 import time
@@ -100,7 +98,7 @@ def _llm_agent_summary(results: dict) -> str:
     client = anthropic.Anthropic()
     prompt = f"""You are an AI agent assisting a power systems engineer who just ran
 a Newton-Raphson load flow on a 6-bus meshed network across a baseline case and four
-N-1 contingency scenarios (load +20%, line impedance +30%, PV removal, combined
+stress scenarios (load +20%, line impedance +30%, PV removal, combined
 stress). Here is the structured simulation output:
 
 {results}

@@ -1,26 +1,20 @@
-# AI-Agent-Assisted Power System Contingency Analysis
+# AI-Assisted Reporting for Power-Flow Studies
 
-A small demo built to directly mirror the responsibilities in Dassault Systèmes'
-**"Working Student (m/f/d) – AI-Powered Research on Electromagnetic Simulation"**
-(SIMULIA Electromagnetics, Darmstadt) posting — specifically this line from the JD:
-
-> "You will test the AI agent's performance on 3DEXPERIENCE by comparing
-> traditional simulation workflows with AI-enhanced processes, measuring
-> improvements in efficiency, accuracy, and user satisfaction."
-
-This project runs that exact comparison, just on a power-system simulation
-instead of an electromagnetic one (matching my actual background), to show the
-methodology transfers directly.
+A small side experiment: run the same pandapower load-flow study twice and
+compare two ways of reporting it. One is the usual raw tables you read by
+hand, the other is an "agent" layer that interprets the numbers, flags risks
+and suggests mitigations. I wanted to see how much interpretation work that
+saves, and whether the conclusions stay correct.
 
 ## What it does
 
-1. Builds a 6-bus meshed AC distribution network in **pandapower** — 4 load
-   buses, 2 generator buses, 500 kW solar PV (~25–35% renewable penetration
-   depending on scenario), 7 lines including a cross-brace so N-1 contingencies
-   don't island the network. This extends the 6-bus network from my BTU Cottbus
-   academic project (`github.com/d-evworks`).
-2. Runs a **Newton-Raphson load flow** across a baseline case plus four N-1
-   contingency scenarios: load +20%, line impedance +30% (aged conductors),
+1. Builds a 6-bus meshed 20 kV network in **pandapower**: 4 load buses
+   (2.0 MW total), one 0.8 MW conventional generator and 500 kW of solar PV
+   (25 % of load at baseline), 7 lines including a cross-brace so a single
+   line outage doesn't island the network. It is a smaller 20 kV
+   variant of the 110 kV network in the main project one folder up.
+2. Runs a **Newton-Raphson load flow** for a baseline case plus four stress
+   scenarios (not N-1 outages): load +20%, line impedance +30% (aged conductors),
    PV removal (solar outage), and combined stress.
 3. Generates **two reports from the identical simulation output**:
    - `traditional_report.md` — a raw numeric dump, the way you'd read
@@ -73,7 +67,7 @@ python compare_workflows.py
 | File | Purpose |
 |---|---|
 | `network.py` | Builds the 6-bus meshed pandapower network |
-| `contingency.py` | Runs baseline + 4 N-1 scenarios, extracts risk metrics |
+| `contingency.py` | Runs baseline + 4 stress scenarios, extracts risk metrics |
 | `ai_agent.py` | Traditional vs. AI-agent report generation (LLM or rule-based) |
 | `compare_workflows.py` | Ties it together, times both workflows, writes `results/` |
 
@@ -84,5 +78,5 @@ python compare_workflows.py
 - Extend `ai_agent.py` to also *propose* which additional contingency
   scenarios are worth testing next, not just summarize the ones already run —
   closer to an autonomous agent than a report generator.
-- Port the same pattern to an actual electromagnetic simulation (e.g. a motor
-  or antenna model) once I have hands-on time with SIMULIA's EM tools.
+- Add a real N-1 loop (each line out of service in turn) like in my
+  [Netzplanung project](https://github.com/d-evworks/Netzplanung-hosting-capacity).

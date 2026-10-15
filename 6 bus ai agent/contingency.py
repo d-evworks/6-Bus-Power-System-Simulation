@@ -1,5 +1,5 @@
 """
-Runs Newton-Raphson AC load flow for the baseline case and four N-1 contingency
+Runs Newton-Raphson AC load flow for the baseline case and four stress
 scenarios against the 6-bus network, and returns structured results usable by
 both the traditional (raw-numbers) workflow and the AI-agent workflow.
 """

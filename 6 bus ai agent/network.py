@@ -33,7 +33,7 @@ def build_network():
     # 500 kW Solar PV at Bus 2
     pp.create_sgen(net, bus=b2, p_mw=0.5, q_mvar=0.0, name="Solar PV", type="PV")
 
-    # Meshed line topology (loop + cross-brace so N-1 contingencies don't island the network)
+    # Meshed line topology (loop + cross-brace so a single line outage doesn't island the network)
     line_params = dict(r_ohm_per_km=0.42, x_ohm_per_km=0.38, c_nf_per_km=230,
                         max_i_ka=0.035)
     pp.create_line_from_parameters(net, from_bus=b0, to_bus=b1, length_km=4.5,
