@@ -8,9 +8,11 @@
 
 ## Overview
 
-This project models a **6-bus AC power distribution network** using [Pandapower](https://www.pandapower.org/), an open-source Python library for power system analysis. A **solar PV generator** is integrated at Bus 2 to study the behaviour of renewable generation in a meshed grid.
+This was my first power-system project in Python, built during my M.Sc. at
+BTU Cottbus to learn load flow hands-on with free tools. It models a
+**meshed 6-bus 110 kV network** using [Pandapower](https://www.pandapower.org/), an open-source Python library for power system analysis. A **25 MW solar PV plant** at Bus 2 covers about 18 % of the 140 MW total load.
 
-The simulation performs **Newton-Raphson load flow analysis**. Power flow calculations are performed using the Newton-Raphson method, an iterative numerical technique widely used for solving nonlinear power system equations under a baseline operating condition and three stress-test scenarios to evaluate how changes in load demand, network impedance, and renewable generation affect **bus voltages**, **line loading**, and overall **grid stability**.
+I run a **Newton-Raphson load flow** for a baseline and three stress tests (more load, longer lines, solar outage) and look at what happens to **bus voltages**, **line loading** and **losses**.
 
 ---
 
@@ -67,22 +69,22 @@ Bus 0 (Slack/Grid) ──── Bus 1 (Load) ──── Bus 2 (Solar PV + Load
 
 ### Baseline
 Standard operating condition. All loads active, solar PV generating 25 MW.  
-All bus voltages expected within the acceptable range of **0.95–1.05 p.u.**
+**Result:** all voltages 0.984–1.02 pu, highest line loading 58 %, losses 1.68 MW.
 
 ### Modification 1 — Stress Test (Increased Load)
 All loads increased by **50%** to simulate peak demand conditions.  
 **Purpose:** Identify voltage collapse risk and overloaded lines under high demand.  
-**Expected outcome:** Voltage drop at remote buses (4, 5), potential line overloading.
+**Result:** lowest voltage 0.961 pu (still inside the band), but Line 0-1 reaches **97 %** loading and losses rise from 1.68 to 4.50 MW (**+167 %**). This is the case closest to an overload.
 
 ### Modification 2 — Weak Network (Increased Line Length)
 All line lengths **doubled**, increasing total impedance (R and X).  
 **Purpose:** Simulate a geographically spread or poorly interconnected grid.  
-**Expected outcome:** Higher resistive losses, greater voltage deviation from Bus 0.
+**Result:** **Bus 4 (0.948 pu) and Bus 5 (0.947 pu) drop below 0.95 pu**, the only voltage violations in the study. Losses rise to 3.55 MW (+111 %).
 
 ### Modification 3 — Renewable Dependency (Solar Generator Removed)
 Solar PV generator at Bus 2 taken offline (`in_service = False`).  
 **Purpose:** Quantify the grid's dependency on renewable generation; study what happens when intermittent sources drop out.  
-**Expected outcome:** Bus 2 voltage drops, external grid must supply additional power, line loading increases.
+**Result:** voltages stay above 0.979 pu, but the grid import increases, Line 0-1 goes from 58 % to 73 % loading and losses rise to 2.44 MW (+45 %).
 
 ---
 
@@ -90,7 +92,7 @@ Solar PV generator at Bus 2 taken offline (`in_service = False`).
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/6-Bus-Power-System-Simulation.git
+git clone https://github.com/d-evworks/6-Bus-Power-System-Simulation.git
 cd 6-Bus-Power-System-Simulation
 ```
 
@@ -125,12 +127,23 @@ Results are saved automatically to `results/` and `diagrams/`.
 
 ## Results Summary
 
-> Run the script to generate your own results. Typical findings:
+| Scenario | Min voltage (pu) | Max line loading | Losses |
+|---|---|---|---|
+| Baseline | 0.984 | 58.3 % | 1.68 MW |
+| Load +50 % | 0.961 | **97.1 %** | 4.50 MW (+167 %) |
+| Line length ×2 | **0.947** (Bus 4, 5) | 59.8 % | 3.55 MW (+111 %) |
+| Solar outage | 0.979 | 73.3 % | 2.44 MW (+45 %) |
 
-- **Baseline:** All voltages within 0.95–1.05 p.u., no lines overloaded.
-- **Mod 1 (High Load):** Voltages at remote buses drop below 0.95 p.u.; lines near industrial bus approach thermal limits.
-- **Mod 2 (Long Lines):** Increased impedance causes higher voltage drops proportional to distance from slack bus.
-- **Mod 3 (No Solar):** Bus 2 voltage decreases; grid import from slack bus increases; highlights solar contribution to local voltage support.
+![Bus voltages per scenario](diagrams/voltage_comparison.png)
+![Line loading per scenario](diagrams/line_loading_comparison.png)
+
+**What I took from it:** the weak-network case is the only one that breaks
+the voltage band, while peak load is the one that pushes a line close to
+its thermal limit. Two different stresses, two different weak points. Local
+reactive power support at Bus 4/5 would be the obvious next thing to test.
+This small model is also what got me interested in distribution grid
+planning, which I followed up in my
+[hosting-capacity and N-1 study](https://github.com/d-evworks/Netzplanung-hosting-capacity).
 
 ---
 
@@ -148,9 +161,9 @@ Results are saved automatically to `results/` and `diagrams/`.
 **Dev Kanwar**  
 M.Sc. Power Engineering — Brandenburgische Technische Universität Cottbus-Senftenberg  
 kanwar.dev0506@gmail.com · [LinkedIn](https://linkedin.com/in/dev-kanwar-b8729124b)
-## Extension: AI-Agent-Assisted Analysis
+## Side experiment: AI-assisted reporting
 
-See [`6 bus ai agent/`](./6%20bus%20ai%20agent) for an extension of this
-project that compares a traditional manual workflow against an AI-agent-assisted
-workflow for interpreting N-1 contingency results — built to demonstrate the
-"AI-enhanced simulation workflow" methodology relevant to SIMULIA-style roles.
+[`6 bus ai agent/`](./6%20bus%20ai%20agent) runs a smaller 20 kV variant of
+this network through four stress scenarios and compares a plain numeric
+report with an automated "agent" report that flags risks and suggests
+mitigations.

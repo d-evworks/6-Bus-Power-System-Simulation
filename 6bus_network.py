@@ -3,7 +3,7 @@
 =========================================================
 Author : Dev Kanwar
 Tools  : Pandapower, Python (pandas, matplotlib)
-Purpose: Model a 6-bus AC distribution network with a solar PV generator,
+Purpose: Model a meshed 6-bus 110 kV network with a solar PV generator,
          perform Newton-Raphson load flow analysis, and run three
          scenario-based stress tests to evaluate voltage stability
          and grid performance.
@@ -40,8 +40,8 @@ def build_network():
     Bus 4 — Load bus (mixed load)
     Bus 5 — Load bus (light load)
 
-    Lines connect buses in a ring + radial topology to mimic a real
-    medium-voltage distribution network.
+    Lines connect buses in a ring + radial topology, similar to a small
+    meshed regional 110 kV network.
     """
 
     net = pp.create_empty_network(name="6-Bus Renewable Integration Network")
