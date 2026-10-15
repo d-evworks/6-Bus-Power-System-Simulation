@@ -1,0 +1,7 @@
+bus_id,vm_pu,va_degree,p_mw,q_mvar,bus_name
+0,1.02,0.0,-189.4955,-80.5837,Bus 0 - Slack (Grid)
+1,0.9752,-3.4975,45.0,15.0,Bus 1 - Load
+2,0.9641,-4.254,5.0,10.5,Bus 2 - Solar + Load
+3,0.9674,-4.4568,75.0,22.5,Bus 3 - Industrial Load
+4,0.962,-4.771,37.5,12.0,Bus 4 - Mixed Load
+5,0.9606,-4.7152,22.5,7.5,Bus 5 - Light Load
